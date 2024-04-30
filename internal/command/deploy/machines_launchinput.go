@@ -20,6 +20,7 @@ func (md *machineDeployment) launchInputForRestart(origMachineRaw *fly.Machine) 
 		Config:     mConfig,
 		Region:     origMachineRaw.Region,
 		SkipLaunch: skipLaunch(origMachineRaw, mConfig),
+		LSVD:       md.lsvd,
 	}
 }
 
@@ -60,6 +61,7 @@ func (md *machineDeployment) launchInputForLaunch(processGroup string, guest *fl
 	return &fly.LaunchMachineInput{
 		Region:     region,
 		Config:     mConfig,
+		LSVD:       md.lsvd,
 		SkipLaunch: len(standbyFor) > 0,
 	}, nil
 }
@@ -170,6 +172,7 @@ func (md *machineDeployment) launchInputForUpdate(origMachineRaw *fly.Machine) (
 		Config:              mConfig,
 		SkipLaunch:          skipLaunch(origMachineRaw, mConfig),
 		RequiresReplacement: machineShouldBeReplaced,
+		LSVD:                md.lsvd,
 	}, nil
 }
 

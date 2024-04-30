@@ -68,6 +68,7 @@ type MachineDeploymentArgs struct {
 	ProcessGroups         map[string]interface{}
 	RestartPolicy         *fly.MachineRestartPolicy
 	RestartMaxRetries     int
+	LSVD                  bool
 }
 
 type machineDeployment struct {
@@ -105,6 +106,7 @@ type machineDeployment struct {
 	maxConcurrent         int
 	volumeInitialSize     int
 	processGroups         map[string]interface{}
+	lsvd                  bool
 }
 
 func NewMachineDeployment(ctx context.Context, args MachineDeploymentArgs) (MachineDeployment, error) {
@@ -223,6 +225,7 @@ func NewMachineDeployment(ctx context.Context, args MachineDeploymentArgs) (Mach
 		maxConcurrent:         maxConcurrent,
 		volumeInitialSize:     args.VolumeInitialSize,
 		processGroups:         args.ProcessGroups,
+		lsvd:                  args.LSVD,
 	}
 	if err := md.setStrategy(); err != nil {
 		tracing.RecordError(span, err, "failed to set strategy")

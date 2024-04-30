@@ -153,6 +153,11 @@ var CommonFlags = flag.Set{
 		Shorthand:   "s",
 		Description: "Signal to stop the machine with for bluegreen strategy (default: SIGINT)",
 	},
+	flag.Bool{
+		Name:        "lsvd",
+		Description: "Enable LSVD for this deployment",
+		Hidden:      true,
+	},
 }
 
 func New() (cmd *cobra.Command) {
@@ -417,6 +422,7 @@ func deployToMachines(
 		MaxConcurrent:         maxConcurrent,
 		VolumeInitialSize:     flag.GetInt(ctx, "volume-initial-size"),
 		ProcessGroups:         processGroups,
+		LSVD:                  flag.GetBool(ctx, "lsvd"),
 	})
 	if err != nil {
 		sentry.CaptureExceptionWithAppInfo(ctx, err, "deploy", app)
